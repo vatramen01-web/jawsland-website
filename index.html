@@ -8,9 +8,22 @@
 </head>
 <body>
 
-    <!-- Космические частицы на фоне -->
-    <div class="stars"></div>
-    <div class="twinkling"></div>
+    <!-- Живой космический бэкграунд -->
+    <div class="space-wrapper">
+        <!-- Слой плотных звезд -->
+        <div class="stars-layer"></div>
+        <div class="stars-layer-dense"></div>
+        
+        <!-- Парад планет -->
+        <div class="planet planet-main"></div> <!-- Главная фиолетовая планета -->
+        <div class="planet planet-blue"></div> <!-- Далекая синяя планета -->
+        <div class="planet planet-ring"></div> <!-- Планета с кольцами вроде Сатурна -->
+        <div class="planet planet-small"></div> <!-- Маленькая огненная луна -->
+        
+        <!-- Падающие кометы -->
+        <div class="comet"></div>
+        <div class="comet"></div>
+    </div>
 
     <!-- Шапка сайта (Неоновый Хедер) -->
     <header>
@@ -33,7 +46,7 @@
                 <div class="ip-block">
                     <div class="ip-text-group">
                         <span class="ip-label">АЙПИ СЕРВЕРА</span>
-                        <strong id="server-ip">JawsLand.com</strong>
+                        <strong id="server-ip">JawsLand.ru</strong>
                     </div>
                     <button class="neon-btn" onclick="copyIP()">КОПИРОВАТЬ</button>
                 </div>
@@ -50,13 +63,12 @@
 
     <!-- Скрипт для копирования IP и вывода реального онлайна -->
     <script>
-        // Новый международный домен вашего сервера
-        const SERVER_IP = "JawsLand.com"; 
+        const SERVER_IP = "JawsLand.ru"; 
 
         function copyIP() {
             const ipText = document.getElementById('server-ip').innerText;
             navigator.clipboard.writeText(ipText);
-            alert('🚀 Космический IP JawsLand.com скопирован!');
+            alert('🚀 Космический IP JawsLand.ru скопирован!');
         }
 
         async function updateOnline() {
@@ -69,18 +81,23 @@
                 
                 if (data.online === true) {
                     onlineText.innerHTML = `${data.players.online} / ${data.players.max}`;
-                    onlineText.style.color = "#00ffcc"; /* Неоновый бирюзовый */
+                    onlineText.style.color = "#00ffcc"; 
                     pulseDot.style.background = "#00ffcc";
                     pulseDot.style.boxShadow = "0 0 10px #00ffcc";
                 } else {
                     onlineText.innerHTML = "ОФЛАЙН";
-                    onlineText.style.color = "#ff0055"; /* Неоновый розовый */
+                    onlineText.style.color = "#ff0055"; 
                     pulseDot.style.background = "#ff0055";
                     pulseDot.style.boxShadow = "0 0 10px #ff0055";
                 }
             } catch (error) {
                 console.error("Ошибка подключения к API:", error);
-                document.getElementById('player-count').innerHTML = "ОШИБКА";
+                document.getElementById('player-count').innerHTML = "ОФЛАЙН";
+                const onlineText = document.getElementById('player-count');
+                const pulseDot = document.querySelector('.pulse-dot');
+                onlineText.style.color = "#ff0055"; 
+                pulseDot.style.background = "#ff0055";
+                pulseDot.style.boxShadow = "0 0 10px #ff0055";
             }
         }
 

@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: #020208; /* Глубокий черный космос */
+    background: #020208; 
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -12,41 +12,143 @@ body {
     position: relative;
 }
 
-/* Эффект мерцания звезд на бэкграунде */
-.stars {
+/* Космический задний план ТОЧНО КАК НА КАРТИНКЕ */
+.space-wrapper {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Фиолетовая галактика на фоне */
+    background: url('https://unsplash.com') no-repeat center center/cover;
+    z-index: -5;
+    filter: brightness(0.55) contrast(1.1); /* Слегка затемняем, чтобы текст сайта идеально читался */
+}
+
+/* Слой мерцающих звезд */
+.stars-layer {
+    position: absolute;
     width: 100%; height: 100%;
-    display: block;
-    background: #020208 url('https://ibb.co') repeat top center;
+    background: transparent url('https://ibb.co') repeat;
+    opacity: 0.6;
+    animation: pulse-stars 4s ease-in-out infinite alternate;
+    z-index: -4;
+}
+
+@keyframes pulse-stars {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* --- ПАРАД ПЛАНЕТ --- */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -3;
+}
+
+/* 1. Главная большая планета (справа внизу, как на вашей картинке) */
+.planet-main {
+    bottom: 10%;
+    right: 8%;
+    width: 280px;
+    height: 280px;
+    background-image: url('https://unsplash.com');
+    box-shadow: inset -30px 30px 60px rgba(0,0,0,0.95), 0 0 20px rgba(255,255,255,0.1);
+    animation: float-planet-1 20s ease-in-out infinite alternate;
+}
+
+/* 2. Ледяная планета-гигант (слева вверху) */
+.planet-blue {
+    top: 8%;
+    left: 5%;
+    width: 200px;
+    height: 200px;
+    background-image: url('https://unsplash.com');
+    box-shadow: inset -20px 20px 40px rgba(0,0,0,0.9), 0 0 30px rgba(138, 43, 226, 0.3);
+    animation: float-planet-2 25s ease-in-out infinite alternate;
+}
+
+/* 3. Далекая таинственная луна (по центру над карточкой) */
+.planet-ring {
+    top: 5%;
+    right: 35%;
+    width: 90px;
+    height: 90px;
+    background-image: url('https://unsplash.com');
+    box-shadow: inset -10px 10px 20px rgba(0,0,0,0.9);
+    opacity: 0.7;
+    animation: float-planet-1 15s ease-in-out infinite alternate-reverse;
+}
+
+/* 4. Небольшая вулканическая планета (слева внизу) */
+.planet-small {
+    bottom: 15%;
+    left: 12%;
+    width: 110px;
+    height: 110px;
+    background-image: url('https://unsplash.com');
+    box-shadow: inset -15px 15px 30px rgba(0,0,0,0.9), 0 0 15px rgba(239, 68, 68, 0.2);
+    animation: float-planet-2 18s ease-in-out infinite alternate-reverse;
+}
+
+/* Физика парения планет */
+@keyframes float-planet-1 {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-15px) rotate(3deg); }
+}
+
+@keyframes float-planet-2 {
+    0% { transform: translateY(0px) translateX(0px); }
+    100% { transform: translateY(12px) translateX(10px); }
+}
+
+/* Падающие неоновые кометы */
+.comet {
+    position: absolute;
+    top: -50px;
+    width: 3px;
+    height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #b537f2;
+    opacity: 0;
+    transform: rotate(-45deg);
     z-index: -2;
 }
 
-.twinkling {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%; height: 100%;
-    display: block;
-    background: transparent url('https://ibb.co') repeat top center;
-    z-index: -1;
-    animation: move-twink-back 200s linear infinite;
+.comet::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(181, 55, 242, 0.5), transparent);
 }
 
-@keyframes move-twink-back {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 5000px; }
+.comet:nth-child(5) { left: 25%; animation: shoot-comet 9s linear infinite; animation-delay: 2s; }
+.comet:nth-child(6) { left: 65%; animation: shoot-comet 14s linear infinite; animation-delay: 5s; }
+
+@keyframes shoot-comet {
+    0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
+    5% { opacity: 1; }
+    15% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
+    100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
 }
 
 /* Космическая неоновая шапка */
 header {
-    background: rgba(10, 5, 20, 0.75);
-    backdrop-filter: blur(10px); /* Эффект матового стекла */
+    background: rgba(4, 2, 10, 0.82);
+    backdrop-filter: blur(12px); 
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 60px;
-    border-bottom: 2px solid rgba(186, 85, 211, 0.3);
-    box-shadow: 0 4px 20px rgba(186, 85, 211, 0.15);
+    border-bottom: 2px solid rgba(181, 55, 242, 0.25);
+    box-shadow: 0 4px 30px rgba(181, 55, 242, 0.15);
+    position: relative;
+    z-index: 10;
 }
 
 .logo {
@@ -59,7 +161,7 @@ header {
 }
 
 .logo span {
-    color: #b537f2; /* Фиолетовый неон */
+    color: #b537f2; 
     text-shadow: 0 0 15px #b537f2, 0 0 30px #b537f2;
 }
 
@@ -79,7 +181,6 @@ nav a:hover {
     text-shadow: 0 0 10px #df96ff;
 }
 
-/* Выделенная кнопка Доната */
 nav .nav-donate {
     border: 1px solid #b537f2;
     padding: 8px 20px;
@@ -100,22 +201,28 @@ nav .nav-donate:hover {
     justify-content: center;
     align-items: center;
     padding: 60px 20px;
-    /* Размытая фиолетовая туманность по центру */
-    background: radial-gradient(circle, rgba(80,15,130,0.4) 0%, rgba(2,2,8,0) 70%);
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content {
-    background: rgba(15, 10, 25, 0.6);
-    border: 1px solid rgba(181, 55, 242, 0.2);
+    background: rgba(4, 2, 10, 0.88); /* Плотный темный фон, чтобы текст читался идеально поверх туманности */
+    border: 1px solid rgba(181, 55, 242, 0.35);
     padding: 50px 60px;
     border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(181, 55, 242, 0.1);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 40px rgba(181, 55, 242, 0.25);
+    backdrop-filter: blur(10px);
     max-width: 700px;
     text-align: center;
+    animation: floating 4s ease-in-out infinite; 
 }
 
-/* Огромный неоновый заголовок */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
 .neon-title {
     font-size: 46px;
     font-weight: 800;
@@ -145,8 +252,8 @@ nav .nav-donate:hover {
 
 /* Космическая плашка IP */
 .ip-block {
-    background: #090614;
-    border: 2px solid #311c52;
+    background: #020106;
+    border: 2px solid #2d1b4d;
     padding: 15px 30px;
     border-radius: 12px;
     display: flex;
@@ -154,7 +261,7 @@ nav .nav-donate:hover {
     align-items: center;
     gap: 30px;
     margin-bottom: 30px;
-    box-shadow: inset 0 0 15px rgba(181, 55, 242, 0.1);
+    box-shadow: inset 0 0 15px rgba(181, 55, 242, 0.2);
 }
 
 .ip-text-group {
@@ -177,7 +284,7 @@ nav .nav-donate:hover {
     letter-spacing: 1px;
 }
 
-/* Футуристичная кнопка с градиентом */
+/* Кнопка */
 .neon-btn {
     background: linear-gradient(45deg, #8a2be2, #4b0082);
     color: white;
@@ -197,12 +304,12 @@ nav .nav-donate:hover {
     box-shadow: 0 0 25px #8a2be2, 0 0 10px #00ffcc;
 }
 
-/* Космический индикатор онлайна */
+/* Онлайн */
 .online-block {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 10px 25px;
     border-radius: 30px;
@@ -210,13 +317,12 @@ nav .nav-donate:hover {
     color: #cdd6f4;
 }
 
-/* Пульсирующая точка онлайна */
 .pulse-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #00ffcc;
-    box-shadow: 0 0 10px #00ffcc;
+    background: #ff0055;
+    box-shadow: 0 0 10px #ff0055;
     animation: dot-pulse 1.5s infinite ease-in-out;
 }
 
